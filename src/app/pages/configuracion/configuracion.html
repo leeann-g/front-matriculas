@@ -1,0 +1,98 @@
+<div class="flex flex-col gap-15 md:gap-2">
+    <p class="w-fit mx-auto px-4 py-2 rounded-lg bg-black font-bold text-2xl text-center text-white">
+        CONFIGURACIÓN PARA LA URL DEL SERVIDOR DE DATOS
+    </p>
+    <div class="">
+        <div class="">
+            <fieldset class="w-fit mx-auto border px-5 py-5 text-center">
+                <legend class="font-extrabold text-xl">Servidor</legend>
+                <div class="flex flex-col w-fit mx-auto px-10 py-5 items-center border bg-gray-200">
+                    <label for="urlApi" class="flex flex-col items-center font-bold"> URL API ACTUAL<span>⬇️🤖</span></label>
+                    <input type="text" [value]="urlApi" id="urlApi" readonly class="w-fit py-2 rounded-4xl border bg-gray-500 text-center text-white md:w-fit md:px-4 md:py-2 cursor-not-allowed">
+                </div>
+            </fieldset>
+        </div>
+        <div class="">
+            <form [formGroup]="formulario" (ngSubmit)="guardar()" class="flex flex-col items-center">
+                <fieldset class="w-fit mx-auto border px-2 py-2 text-center">
+                    <legend class="font-extrabold text-xl">Servidor nuevo</legend>
+                    <div class="flex flex-col w-fit mx-auto px-10 py-5 items-center border bg-gray-200">
+                        <label for="apiUrlNuevo" class="flex flex-col items-center font-bold">API URL NUEVO <span>⬇️🤖</span></label>
+                        <div class="flex items-center gap-2">
+                            <input type="text" formControlName="apiUrlNuevo" id="apiUrlNuevo" class="py-2 rounded-4xl border bg-white text-center text-black md:px-4 md:py-2" placeholder="Ingrese IP nuevo" [class.border-red-500]="formulario.get('apiUrlNuevo')?.touched && formulario.get('apiUrlNuevo')?.invalid">
+                            <button type="button" (click)="verAyuda()"><img src="/images/pregunta.png" alt="pregunta" class="w-8 h-8"></button>
+                        </div>
+                        @if (formulario.get('apiUrlNuevo')?.touched && formulario.get('apiUrlNuevo')?.invalid) {
+                            <p class="text-red-600 font-bold">
+                                Debe contener mínimo el texto
+                            </p>
+                        }
+                        @if(this.formulario.valid){
+                            <button type="button" (click)="probarConexion()" class="mt-2  px-2 py-1 rounded-lg bg-green-400 font-semibold text-gray-100">
+                                Probar Conexion
+                            </button>
+                        }
+                        <p> {{construirApiUrl()}} </p>
+                    </div>
+                </fieldset>
+                    <button type="submit" [disabled]="formulario.invalid" class="w-fit mt-5 px-4 py-2 rounded-2xl bg-emerald-600 font-bold text-lg text-white hover:bg-emerald-900 hover:text-gray-300 hover:-translate-y-1 disabled:bg-gray-400 disabled:cursor-not-allowed">
+                        Guardar
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+@if (ayuda) {
+    <div class="flex items-center justify-center fixed inset-0 bg-black/50 z-50">
+        <div class="flex flex-col justify-center w-60 bg-white rounded-t-sm rounded-b-2xl">
+            <h2 class="rounded-sm bg-black font-bold text-2xl text-white text-center">
+                AYUDA
+            </h2>
+            <div class="px-4 py-2">
+                <p>
+                    Pasos para acceder al ip:
+                </p>
+                <div class="text-center">
+                    <ol class="list-decimal list-inside">
+                        <li>
+                            Abre cmd
+                        </li>
+                        <li>
+                            Escribe:ipconfig
+                        </li>
+                        <li>
+                            Busca Adaptador Ethernet / Adaptador Wifi
+                        </li>
+                        <li>
+                            Dirección IPv4
+                        </li>
+                        <li>
+                            -> 192.168.x.x
+                        </li>
+                        <li>
+                            Anotalo y guardalo
+                        </li>
+                    </ol>
+                </div>
+            </div>
+            <button type="button" (click)="cerrarAyuda()" class="w-fit mx-auto px-4 py-2 m-5 rounded-lg bg-black font-semibold text-white hover:bg-gray-500 hover:-translate-y-1">
+                Cerrar
+            </button>
+        </div>
+    </div>
+}
+@if (mensaje) {
+    <div class="flex items-center justify-center fixed inset-0 bg-black/50 z-50">
+        <div class="flex flex-col justify-center w-60 bg-white rounded-t-sm rounded-b-2xl">
+            <h2 class="rounded-sm bg-black font-bold text-2xl text-white text-center">
+                Conexion
+            </h2>
+            <p class="mt-5 font-bold text-3xl text-center">
+                {{mensaje}}
+            </p>
+            <button type="button" (click)="mensaje='' " class="w-fit mx-auto px-4 py-2 m-5 rounded-lg bg-black font-semibold text-white hover:bg-gray-500 hover:-translate-y-1">
+                Cerrar
+            </button>
+        </div>
+    </div>
+}

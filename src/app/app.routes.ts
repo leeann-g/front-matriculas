@@ -11,7 +11,7 @@ export const routes: Routes = [
     {path: 'inicio', component: Inicio},
     {path: 'configuracion', component: Configuracion},
     {path: 'inicio-matriculas', component: InicioMatriculas},
-    {path: 'formulario-matriculas', component: FormularioMatriculas},
+    {path: 'formulario-matricula', component: FormularioMatriculas},
     {path: 'inicio-roturas', component: InicioRoturas},
     {path: 'formulario-roturas', component:FormularioRoturas}
 ];

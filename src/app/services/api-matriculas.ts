@@ -13,4 +13,7 @@ export class ApiMatriculas {
   getMatriculas(){
     return this.http.get<Matricula[]>(`${this.config.getUrlApi()}/matriculas`);
   }
+  postMatriculas(datos:any[]){
+    return this.http.post(`${this.config}/matriculas`, datos);
+  }
 }

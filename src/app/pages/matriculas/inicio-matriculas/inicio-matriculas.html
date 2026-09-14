@@ -1,26 +1,40 @@
-<div class="border">
-    <div class="w-full mx-auto  px-5 py-3 bg-black md:w-fit md:rounded-sm">
-        <p class="text-white text-center">
-            Matriculas creadas
-        </p>
+<div class="md:w-fit md:mt-10 md:mx-auto">
+    <div class="relative flex items-center justify-center">
+        <div class="absolute left-0">
+            <a routerLink="/formulario-matricula" class="w-fit px-5 py-3 rounded-2xl bg-black font-bold text-white hidden md:block hover:border hover:bg-gray-500 hover:-translate-y-1">Crear Matricula</a>
+        </div>
+        <div class="w-fit px-5 py-3 bg-black md:w-fit md:rounded-sm">
+            <p class=" print-text text-white text-center">
+                Matriculas creadas
+            </p>
+        </div>
     </div>
-    <div class="h-100 overflow-y-auto md:mt-5 md:mx-auto md:w-250 2xl:w-400">
+    <div class="mt-5 h-100 overflow-y-auto md:mt-5 md:mx-auto md:w-250 2xl:w-350 overflow-x-auto">
         <table class="w-full border">
             <thead>
                 <tr>
-                    <th>
+                    <th class="px-3 py-2">
+                        ID
+                    </th>
+                    <th class="px-3 py-2">
                         Fecha
                     </th>
-                    <th>
-                        Codigo 
+                    <th class="px-3 py-2">
+                        Nombre 
                     </th>
-                    <th>
+                    <th class="px-3 py-2">
+                        Code
+                    </th>
+                    <th class="px-3 py-2">
                         Nuid
                     </th>
-                    <th>
+                    <th class="px-3 py-2 whitespace-nowrap">
                         N° Medidor
                     </th>
-                    <th>
+                    <th class="px-3 py-2">
+                        Direccion
+                    </th>
+                    <th class="px-3 py-2">
                         Rotura
                     </th>
                     <th>
@@ -32,7 +46,13 @@
                 @for (matricula of matriculas; track matricula.id) {
                     <tr>
                         <td>
+                            {{matricula.id}}
+                        </td>
+                        <td>
                             {{matricula.date}}
+                        </td>
+                        <td>
+                            {{matricula.name}}
                         </td>
                         <td>
                             {{matricula.code}}
@@ -44,7 +64,10 @@
                             {{matricula.meter_number}}
                         </td>
                         <td>
-                            {{matricula.rip_status ? 'SI' : 'NO'}}
+                            {{matricula.address}}
+                        </td>
+                        <td>
+                            {{matricula.rip_status ? 'Si':'NO'}}
                         </td>
                         <td>
                             {{matricula.status}}

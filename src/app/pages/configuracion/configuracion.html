@@ -1,4 +1,5 @@
-<div class="flex flex-col gap-15 md:gap-2">
+<div class="md:mt-10">
+    <div class="flex flex-col gap-15 md:gap-2">
     <p class="w-fit mx-auto px-4 py-2 rounded-lg bg-black font-bold text-2xl text-center text-white">
         CONFIGURACIÓN PARA LA URL DEL SERVIDOR DE DATOS
     </p>
@@ -24,7 +25,7 @@
                         </div>
                         @if (formulario.get('apiUrlNuevo')?.touched && formulario.get('apiUrlNuevo')?.invalid) {
                             <p class="text-red-600 font-bold">
-                                Debe contener mínimo el texto
+                                Debe contener mínimo un texto
                             </p>
                         }
                         @if(this.formulario.valid){
@@ -58,7 +59,7 @@
                             Abre cmd
                         </li>
                         <li>
-                            Escribe:ipconfig
+                            Escribe: ipconfig
                         </li>
                         <li>
                             Busca Adaptador Ethernet / Adaptador Wifi
@@ -96,3 +97,4 @@
         </div>
     </div>
 }
+</div>

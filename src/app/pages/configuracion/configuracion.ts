@@ -40,7 +40,7 @@ export class Configuracion {
     this.router.navigate(['/inicio']);
   }
   verAyuda(){
-    this.ayuda = true ;
+    this.ayuda = true;
     document.body.style.overflow = "hidden";
   }
   cerrarAyuda(){

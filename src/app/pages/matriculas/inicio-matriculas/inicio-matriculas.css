@@ -1,0 +1,6 @@
+@media print {
+    .print-text{
+        font-size: xx-large;
+        color: black;
+    }
+}

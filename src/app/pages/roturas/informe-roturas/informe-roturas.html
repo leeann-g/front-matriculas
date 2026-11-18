@@ -1,0 +1,123 @@
+
+<div class="min-h-screen bg-gray-50 p-6">
+
+    <!-- Encabezado -->
+    <div class="mb-8">
+        <h1 class="text-2xl font-bold text-gray-800">
+            Informes Bimestrales
+        </h1>
+
+        <p class="mt-1 text-sm text-gray-500">
+            Consulta y visualiza las roturas registradas por período.
+        </p>
+    </div>
+
+    <!-- Resumen -->
+    <div class="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
+
+        <div class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+            <p class="text-sm font-medium text-gray-500">
+                Total de informes
+            </p>
+
+            <p class="mt-2 text-3xl font-bold text-gray-800">
+                {{ bimestres.length }}
+            </p>
+        </div>
+
+        <div class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+            <p class="text-sm font-medium text-gray-500">
+                Total de roturas
+            </p>
+
+            <p class="mt-2 text-3xl font-bold text-blue-600">
+                {{ obtenerTotalRoturas() }}
+            </p>
+        </div>
+
+    </div>
+
+    <!-- Título de sección -->
+    <div class="mb-4 flex items-center justify-between">
+        <h2 class="text-lg font-bold text-gray-800">
+            Períodos disponibles
+        </h2>
+
+        <span class="text-sm text-gray-500">
+            {{ bimestres.length }} períodos
+        </span>
+    </div>
+
+    <!-- Tarjetas -->
+    <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+
+        @for (bimestre of bimestres; track bimestre.ANIO + '-' + bimestre.BIMESTRE) {
+
+            <div class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
+
+                <div class="mb-4 flex items-center justify-between">
+
+                    <div class="flex h-11 w-11 items-center justify-center rounded-lg bg-blue-100 text-blue-600">
+                        <span class="text-xl font-bold">
+                            {{ bimestre.BIMESTRE }}
+                        </span>
+                    </div>
+
+                    <span class="rounded-full bg-green-100 px-3 py-1 text-xs font-bold text-green-700">
+                        Disponible
+                    </span>
+
+                </div>
+
+                <p class="text-sm font-medium text-gray-500">
+                    Bimestre {{ bimestre.BIMESTRE }}
+                </p>
+
+                <h3 class="mt-1 text-xl font-bold text-gray-800">
+                    {{ obtenerNombreBimestre(bimestre.BIMESTRE) }}
+                </h3>
+
+                <p class="mt-1 text-sm text-gray-500">
+                    Año {{ bimestre.ANIO }}
+                </p>
+
+                <div class="my-5 border-t border-gray-100"></div>
+
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-xs text-gray-500">
+                            Roturas registradas
+                        </p>
+
+                        <p class="mt-1 text-2xl font-bold text-gray-800">
+                            {{ bimestre.TOTAL }}
+                        </p>
+                    </div>
+
+                    <button (click)="verInforme(bimestre)"
+                        class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700 hover:cursor-pointer">
+                        Ver informe
+                    </button>
+                </div>
+
+            </div>
+
+        } @empty {
+
+            <div class="col-span-full rounded-xl border border-dashed border-gray-300 bg-white p-10 text-center">
+
+                <p class="text-lg font-semibold text-gray-700">
+                    No hay informes disponibles
+                </p>
+
+                <p class="mt-2 text-sm text-gray-500">
+                    Cuando se registren roturas, aparecerán aquí los períodos correspondientes.
+                </p>
+
+            </div>
+
+        }
+
+    </div>
+
+</div>

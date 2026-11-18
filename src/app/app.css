@@ -1,0 +1,30 @@
+@media print {
+
+    /* Ocultar todo lo marcado */
+    .no-print {
+        display: none !important;
+    }
+
+    /* Eliminar espacios del layout */
+    body,
+    html,
+    app-root,
+    main {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+        background: white !important;
+    }
+
+    /* Evitar que el contenido quede desplazado */
+    .lg\:ml-64 {
+        margin-left: 0 !important;
+    }
+
+    /* Ocultar elementos de navegación */
+    aside,
+    header,
+    nav {
+        display: none !important;
+    }
+}

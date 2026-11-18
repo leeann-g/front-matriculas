@@ -1,12 +1,440 @@
-<div class="mt-10">
-    <div class="bg-gray-200 w-fit mx-auto">
-        <div class="w-full mx-auto px-4     py-2 rounded-t-2xl bg-black">
-            <p class="font-bold text-2xl text-white">
-                Formulario de matricula
+
+<!-- FORMULARIO PRINCIPAL DE MATRÍCULA -->
+<div class="min-h-screen bg-slate-100 px-3 py-6 sm:px-6 md:mt-6">
+    <div class="mx-auto max-w-5xl">
+
+        <!-- Encabezado -->
+        <div class="mb-8">
+            <p class="mb-2 text-sm font-bold uppercase tracking-widest text-blue-700">
+                Gestión administrativa
+            </p>
+
+            <h1 class="text-2xl font-extrabold text-slate-900 sm:text-3xl">
+                Registro de matrícula
+            </h1>
+
+            <p class="mt-2 text-sm text-slate-500 sm:text-base">
+                Ingresa la información del usuario para registrar una nueva matrícula.
             </p>
         </div>
-        <form action="" class="border">
-            <label for="date">Fecha</label>
-        </form>
+
+        <!-- Tarjeta principal -->
+        <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+
+            <!-- Título de tarjeta -->
+            <div class="border-b border-slate-200 bg-slate-900 px-5 py-5 sm:px-7">
+                <div class="flex items-center gap-3">
+                    <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-white/10 text-xl">
+                        📋
+                    </div>
+
+                    <div>
+                        <h2 class="text-lg font-bold text-white">
+                            Datos de la matrícula
+                        </h2>
+                        <p class="text-sm text-slate-300">
+                            Información general del registro
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Formulario -->
+            <div class="p-5 sm:p-7">
+                <form [formGroup]="formMatricula">
+
+                    <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
+
+                        <!-- Fecha -->
+                        <label class="block">
+                            <span class="mb-2 block text-sm font-bold text-slate-700">
+                                Fecha
+                            </span>
+
+                            <input
+                                type="date"
+                                formControlName="date"
+                                class="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-800 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-100"
+                            >
+                        </label>
+
+                        <!-- Nombre -->
+                        <label class="block">
+                            <span class="mb-2 block text-sm font-bold text-slate-700">
+                                Nombre
+                            </span>
+
+                            <input
+                                type="text"
+                                formControlName="name"
+                                placeholder="Nombre completo"
+                                class="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-800 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-100"
+                            >
+                        </label>
+
+                        <!-- Código -->
+                        <label class="block">
+                            <span class="mb-2 block text-sm font-bold text-slate-700">
+                                Código
+                            </span>
+
+                            <input
+                                type="text"
+                                formControlName="code"
+                                placeholder="Código del usuario"
+                                class="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-800 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-100"
+                            >
+                        </label>
+
+                        <!-- Nuid -->
+                        <label class="block">
+                            <span class="mb-2 block text-sm font-bold text-slate-700">
+                                NUID
+                            </span>
+
+                            <input
+                                type="text"
+                                formControlName="nuid"
+                                placeholder="Número NUID"
+                                class="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-800 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-100"
+                            >
+                        </label>
+
+                        <!-- Número de medidor -->
+                        <label class="block">
+                            <span class="mb-2 block text-sm font-bold text-slate-700">
+                                Número de medidor
+                            </span>
+
+                            <input
+                                type="text"
+                                formControlName="meter_number"
+                                placeholder="Número del medidor"
+                                class="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-800 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-100"
+                            >
+                        </label>
+
+                        <!-- Dirección -->
+                        <label class="block">
+                            <span class="mb-2 block text-sm font-bold text-slate-700">
+                                Dirección
+                            </span>
+
+                            <input
+                                type="text"
+                                formControlName="address"
+                                placeholder="Dirección del usuario"
+                                class="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-800 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-100"
+                            >
+                        </label>
+
+                        <!-- Rotura -->
+                        <label class="block md:col-span-2">
+                            <span class="mb-2 block text-sm font-bold text-slate-700">
+                                ¿Tiene rotura?
+                            </span>
+
+                            <select
+                                formControlName="rip_status"
+                                class="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-800 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-100"
+                            >
+                                <option value="si">Sí</option>
+                                <option value="no">No</option>
+                            </select>
+                        </label>
+
+                        <!-- Estado -->
+                        <label class="block md:col-span-2">
+                            <span class="mb-2 block text-sm font-bold text-slate-700">
+                                Estado de la matrícula
+                            </span>
+
+                            <select
+                                formControlName="status"
+                                [class.bg-green-600]="formMatricula.value.status === 'activa'"
+                                [class.bg-yellow-600]="formMatricula.value.status === 'pendiente'"
+                                [class.bg-red-500]="formMatricula.value.status === 'eliminada'"
+                                class="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm font-bold text-white outline-none transition focus:ring-2 focus:ring-blue-100"
+                            >
+                                <option value="activa" class="bg-green-600 font-bold">
+                                    Activa
+                                </option>
+
+                                <option value="pendiente" class="bg-yellow-600 font-bold">
+                                    Pendiente
+                                </option>
+
+                                <option value="eliminada" class="bg-red-500 font-bold">
+                                    Eliminada
+                                </option>
+                            </select>
+                        </label>
+
+                        <!-- Observaciones -->
+                        <label class="block md:col-span-2">
+                            <span class="mb-2 block text-sm font-bold text-slate-700">
+                                Observaciones
+                            </span>
+
+                            <textarea
+                                formControlName="observation"
+                                rows="4"
+                                placeholder="Escribe alguna observación..."
+                                class="w-full resize-y rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-800 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-100"
+                            ></textarea>
+                        </label>
+
+                    </div>
+                     <!-- MENSAJE DE ERROR -->
+                    @if (mensajeErrorMatricula) {
+                        <div class="mt-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                            {{ mensajeErrorMatricula }}
+                        </div>
+                    }
+
+                    <!-- Botones -->
+                    <div class="mt-8 flex flex-col-reverse gap-3 border-t border-slate-200 pt-6 sm:flex-row sm:items-center sm:justify-between">
+
+                        <button
+                            type="button"
+                            routerLink="/inicio"
+                            class="hidden rounded-xl bg-slate-600 px-5 py-3 font-bold text-white transition hover:-translate-y-0.5 hover:bg-slate-700 md:block"
+                        >
+                            Volver al inicio
+                        </button>
+
+                        <div class="flex flex-col gap-3 sm:flex-row">
+
+                            <button
+                                type="button"
+                                (click)="reiniciarForm()"
+                                class="rounded-xl border border-red-200 bg-red-50 px-5 py-3 font-bold text-red-700 transition hover:-translate-y-0.5 hover:bg-red-100"
+                            >
+                                Limpiar formulario
+                            </button>
+
+                            <button
+                                type="button"
+                                (click)="crearMatricula()"
+                                [disabled]="formMatricula.invalid || loading"
+                                class="flex items-center justify-center gap-2 rounded-xl bg-emerald-600 px-6 py-3 font-bold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-emerald-700 disabled:cursor-not-allowed disabled:bg-slate-300 disabled:text-slate-500 disabled:shadow-none"
+                            >
+                                @if (loading) {
+                                    <div class="h-6 w-6 animate-spin rounded-full border-4 border-white/30 border-t-white"></div>
+                                } @else {
+                                    <span>Guardar matrícula</span>
+                                }
+                            </button>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
+
+
+<!-- MODAL DE REGISTRO DE ROTURA -->
+@if (mostrarFormularioRotura) {
+    <div class="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-slate-950/60 px-3 py-6 backdrop-blur-sm">
+
+        <div class="my-auto w-full max-w-2xl overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl">
+
+            <!-- Encabezado modal -->
+            <div class="bg-slate-900 px-5 py-5 sm:px-7">
+                <div class="flex items-center gap-3">
+                    <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-white/10 text-xl">
+                        🔧
+                    </div>
+
+                    <div>
+                        <h2 class="text-xl font-extrabold text-white">
+                            Registro de rotura
+                        </h2>
+
+                        <p class="text-sm text-slate-300">
+                            Información asociada a la matrícula
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contenido -->
+            <div class="p-5 sm:p-7">
+
+                <form [formGroup]="formRotura">
+
+                    <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
+
+                        <!-- ID -->
+                        <label class="hidden">
+                            <p>ID</p>
+                            <input type="number" [value]="matriculaId">
+                        </label>
+
+                        <!-- Nombre -->
+                        <label class="block">
+                            <span class="mb-2 block text-sm font-bold text-slate-700">
+                                Nombre
+                            </span>
+
+                            <input
+                                type="text"
+                                [value]="matricula.name"
+                                readonly
+                                class="w-full cursor-not-allowed rounded-xl border border-slate-200 bg-slate-100 px-4 py-3 text-sm text-slate-600"
+                            >
+                        </label>
+
+                        <!-- Nuid -->
+                        <label class="block">
+                            <span class="mb-2 block text-sm font-bold text-slate-700">
+                                NUID
+                            </span>
+
+                            <input
+                                type="text"
+                                [value]="matricula.nuid"
+                                readonly
+                                class="w-full cursor-not-allowed rounded-xl border border-slate-200 bg-slate-100 px-4 py-3 text-sm text-slate-600"
+                            >
+                        </label>
+
+                        <!-- Rotura -->
+                        <label class="block">
+                            <span class="mb-2 block text-sm font-bold text-slate-700">
+                                Tipo de rotura
+                            </span>
+
+                            <select
+                                formControlName="rip"
+                                class="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-800 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-100"
+                            >
+                                <option value="">~ Selecciona ~</option>
+                                <option value="financiada">Financiado</option>
+                                <option value="cancelada">Cancelada</option>
+                            </select>
+                        </label>
+
+                        <!-- Medio de pago -->
+                        <label class="block">
+                            <span class="mb-2 block text-sm font-bold text-slate-700">
+                                Medio de pago
+                            </span>
+
+                            <select
+                                formControlName="payment"
+                                class="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-800 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-100"
+                            >
+                                <option value="">~ Selecciona ~</option>
+                                <option value="recibo caja">Recibo caja</option>
+                                <option value="factura">Factura</option>
+                            </select>
+                        </label>
+
+                        <!-- Valor -->
+                        <label class="block">
+                            <span class="mb-2 block text-sm font-bold text-slate-700">
+                                Valor
+                            </span>
+
+                            <input
+                                type="number"
+                                formControlName="amount"
+                                placeholder="Valor de la rotura"
+                                class="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-800 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-100"
+                            >
+                        </label>
+
+                        <!-- Fecha de pago -->
+                        <label class="block">
+                            <span class="mb-2 block text-sm font-bold text-slate-700">
+                                Fecha de pago
+                            </span>
+
+                            <input
+                                type="date"
+                                formControlName="payment_date"
+                                class="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-800 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-100"
+                            >
+                        </label>
+
+                        <!-- Observaciones -->
+                        <label class="block md:col-span-2">
+                            <span class="mb-2 block text-sm font-bold text-slate-700">
+                                Observaciones
+                            </span>
+
+                            <textarea
+                                formControlName="observation"
+                                rows="4"
+                                placeholder="Escribe alguna observación..."
+                                class="w-full resize-y rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-800 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-100"
+                            ></textarea>
+                        </label>
+
+                    </div>
+
+                    @if (mensajeErrorRotura) {
+                        <div class="mt-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                            {{ mensajeErrorRotura }}
+                        </div>
+                    }
+                    <!-- Botón guardar rotura -->
+                    <div class="mt-7 flex justify-end border-t border-slate-200 pt-5">
+                        <button
+                            type="button"
+                            (click)="crearRotura()"
+                            [disabled]="formMatricula.invalid"
+                            class="flex items-center justify-center gap-2 rounded-xl bg-emerald-600 px-6 py-3 font-bold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-emerald-700 disabled:cursor-not-allowed disabled:bg-slate-300 disabled:text-slate-500 disabled:shadow-none"
+                        >
+                            @if (loading) {
+                                <div class="h-6 w-6 animate-spin rounded-full border-4 border-white/30 border-t-white"></div>
+                            } @else {
+                                <span>Guardar rotura</span>
+                            }
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+}
+
+
+<!-- MODAL DE CONFIRMACIÓN -->
+@if (mensajeCreacion) {
+    <div class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/60 px-4 backdrop-blur-sm">
+
+        <div class="w-full max-w-sm overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl">
+
+            <div class="bg-slate-900 px-5 py-4">
+                <h2 class="text-center text-lg font-extrabold text-white">
+                    Registro exitoso
+                </h2>
+            </div>
+
+            <div class="flex flex-col items-center p-6">
+
+                <div class="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100">
+                    <span class="text-3xl text-emerald-700">✓</span>
+                </div>
+
+                <p class="text-center text-base font-semibold text-slate-700">
+                    Creado correctamente
+                </p>
+
+                <button
+                    type="button"
+                    (click)="cerrarMensaje()"
+                    class="mt-6 w-full rounded-xl bg-slate-900 px-4 py-3 font-bold text-white transition hover:bg-slate-700"
+                >
+                    Cerrar
+                </button>
+
+            </div>
+        </div>
+    </div>
+}

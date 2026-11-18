@@ -1,100 +1,275 @@
-<div class="md:mt-10">
-    <div class="flex flex-col gap-15 md:gap-2">
-    <p class="w-fit mx-auto px-4 py-2 rounded-lg bg-black font-bold text-2xl text-center text-white">
-        CONFIGURACIÓN PARA LA URL DEL SERVIDOR DE DATOS
-    </p>
-    <div class="">
-        <div class="">
-            <fieldset class="w-fit mx-auto border px-5 py-5 text-center">
-                <legend class="font-extrabold text-xl">Servidor</legend>
-                <div class="flex flex-col w-fit mx-auto px-10 py-5 items-center border bg-gray-200">
-                    <label for="urlApi" class="flex flex-col items-center font-bold"> URL API ACTUAL<span>⬇️🤖</span></label>
-                    <input type="text" [value]="urlApi" id="urlApi" readonly class="w-fit py-2 rounded-4xl border bg-gray-500 text-center text-white md:w-fit md:px-4 md:py-2 cursor-not-allowed">
-                </div>
-            </fieldset>
+
+<div class="min-h-screen bg-slate-100 px-3 py-6 sm:px-6 md:mt-6">
+    <div class="mx-auto max-w-7xl">
+
+        <!-- Encabezado -->
+        <div class="mb-8">
+            <p class="mb-2 text-sm font-bold uppercase tracking-widest text-blue-700">
+                Administración del sistema
+            </p>
+
+            <h1 class="text-2xl font-extrabold text-slate-900 sm:text-3xl">
+                Configuración del servidor
+            </h1>
+
+            <p class="mt-2 text-sm text-slate-500 sm:text-base">
+                Consulta y administra la conexión con el servidor de datos de la aplicación.
+            </p>
         </div>
-        <div class="">
-            <form [formGroup]="formulario" (ngSubmit)="guardar()" class="flex flex-col items-center">
-                <fieldset class="w-fit mx-auto border px-2 py-2 text-center">
-                    <legend class="font-extrabold text-xl">Servidor nuevo</legend>
-                    <div class="flex flex-col w-fit mx-auto px-10 py-5 items-center border bg-gray-200">
-                        <label for="apiUrlNuevo" class="flex flex-col items-center font-bold">API URL NUEVO <span>⬇️🤖</span></label>
-                        <div class="flex items-center gap-2">
-                            <input type="text" formControlName="apiUrlNuevo" id="apiUrlNuevo" class="py-2 rounded-4xl border bg-white text-center text-black md:px-4 md:py-2" placeholder="Ingrese IP nuevo" [class.border-red-500]="formulario.get('apiUrlNuevo')?.touched && formulario.get('apiUrlNuevo')?.invalid">
-                            <button type="button" (click)="verAyuda()"><img src="/images/pregunta.png" alt="pregunta" class="w-8 h-8"></button>
+
+        <!-- Contenido -->
+        <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+
+            <!-- Servidor actual -->
+            <section class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+
+                <div class="border-b border-slate-200 bg-slate-900 px-5 py-4 sm:px-6">
+                    <div class="flex items-center gap-3">
+                        <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-white/10">
+                            <span class="text-xl">🌐</span>
                         </div>
-                        @if (formulario.get('apiUrlNuevo')?.touched && formulario.get('apiUrlNuevo')?.invalid) {
-                            <p class="text-red-600 font-bold">
-                                Debe contener mínimo un texto
+
+                        <div>
+                            <h2 class="font-bold text-white">
+                                Servidor actual
+                            </h2>
+                            <p class="text-xs text-slate-300">
+                                Dirección API configurada
                             </p>
-                        }
-                        @if(this.formulario.valid){
-                            <button type="button" (click)="probarConexion()" class="mt-2  px-2 py-1 rounded-lg bg-green-400 font-semibold text-gray-100">
-                                Probar Conexion
-                            </button>
-                        }
-                        <p> {{construirApiUrl()}} </p>
+                        </div>
                     </div>
-                </fieldset>
-                    <button type="submit" [disabled]="formulario.invalid" class="w-fit mt-5 px-4 py-2 rounded-2xl bg-emerald-600 font-bold text-lg text-white hover:bg-emerald-900 hover:text-gray-300 hover:-translate-y-1 disabled:bg-gray-400 disabled:cursor-not-allowed">
-                        Guardar
-                </button>
-            </form>
+                </div>
+
+                <div class="p-5 sm:p-6">
+                    <label for="urlApi" class="mb-2 block text-sm font-bold text-slate-700">
+                        URL API ACTUAL
+                    </label>
+
+                    <input
+                        type="text"
+                        [value]="urlApi"
+                        id="urlApi"
+                        readonly
+                        class="w-full cursor-not-allowed rounded-xl border border-slate-200 bg-slate-100 px-4 py-3 text-sm font-medium text-slate-600 outline-none"
+                    >
+
+                    <div class="mt-4 flex items-start gap-2 rounded-xl border border-blue-100 bg-blue-50 p-3">
+                        <span class="text-lg">ℹ️</span>
+                        <p class="text-sm text-blue-800">
+                            Esta es la dirección del servidor que utiliza actualmente la aplicación.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Servidor nuevo -->
+            <section class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+
+                <div class="border-b border-slate-200 bg-slate-900 px-5 py-4 sm:px-6">
+                    <div class="flex items-center gap-3">
+                        <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-white/10">
+                            <span class="text-xl">⚙️</span>
+                        </div>
+
+                        <div>
+                            <h2 class="font-bold text-white">
+                                Nuevo servidor
+                            </h2>
+                            <p class="text-xs text-slate-300">
+                                Configura una nueva dirección API
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <form
+                    [formGroup]="formulario"
+                    (ngSubmit)="guardar()"
+                    class="p-5 sm:p-6"
+                >
+                    <label for="apiUrlNuevo" class="mb-2 block text-sm font-bold text-slate-700">
+                        NUEVA URL API
+                    </label>
+
+                    <div class="flex items-center gap-2">
+                        <input
+                            type="text"
+                            formControlName="apiUrlNuevo"
+                            id="apiUrlNuevo"
+                            placeholder="Ingrese la IP del servidor"
+                            class="min-w-0 flex-1 rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-800 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-100"
+                            [class.border-red-500]="formulario.get('apiUrlNuevo')?.touched && formulario.get('apiUrlNuevo')?.invalid"
+                        >
+
+                        <button
+                            type="button"
+                            (click)="verAyuda()"
+                            title="Ayuda para encontrar la IP"
+                            class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-slate-100 transition hover:bg-slate-200"
+                        >
+                            <img
+                                src="/images/pregunta.png"
+                                alt="Ayuda"
+                                class="h-6 w-6"
+                            >
+                        </button>
+                    </div>
+
+                    @if (formulario.get('apiUrlNuevo')?.touched && formulario.get('apiUrlNuevo')?.invalid) {
+                        <p class="mt-2 text-sm font-semibold text-red-600">
+                            Debe contener mínimo un texto.
+                        </p>
+                    }
+
+                    <!-- URL construida -->
+                    <div class="mt-5 rounded-xl border border-slate-200 bg-slate-50 p-4">
+                        <p class="mb-2 text-xs font-bold uppercase tracking-wider text-slate-500">
+                            URL que se utilizará
+                        </p>
+
+                        <p class="break-all text-sm font-medium text-slate-700">
+                            {{construirApiUrl()}}
+                        </p>
+                    </div>
+
+                    <!-- Probar conexión -->
+                    @if (this.formulario.valid) {
+                        <button
+                            type="button"
+                            (click)="probarConexion()"
+                            [disabled]="loading"
+                            class="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-blue-700 px-4 py-3 font-bold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-blue-800 disabled:cursor-not-allowed disabled:opacity-60"
+                        >
+                            @if (loading) {
+                                <div class="h-5 w-5 animate-spin rounded-full border-4 border-white/30 border-t-white"></div>
+                                <span>Probando conexión...</span>
+                            } @else {
+                                <span>Probar conexión</span>
+                            }
+                        </button>
+                    }
+
+                    <!-- Guardar -->
+                    <div class="mt-6 border-t border-slate-200 pt-5">
+                        <button
+                            type="submit"
+                            [disabled]="formulario.invalid"
+                            class="w-full rounded-xl bg-emerald-600 px-5 py-3 font-bold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-emerald-700 disabled:cursor-not-allowed disabled:bg-slate-300 disabled:text-slate-500 disabled:shadow-none"
+                        >
+                            Guardar configuración
+                        </button>
+
+                        <p class="mt-3 text-center text-xs text-slate-400">
+                            Verifica la conexión antes de guardar los cambios.
+                        </p>
+                    </div>
+                </form>
+            </section>
         </div>
     </div>
 </div>
+
+<!-- Modal de ayuda -->
 @if (ayuda) {
-    <div class="flex items-center justify-center fixed inset-0 bg-black/50 z-50">
-        <div class="flex flex-col justify-center w-60 bg-white rounded-t-sm rounded-b-2xl">
-            <h2 class="rounded-sm bg-black font-bold text-2xl text-white text-center">
-                AYUDA
-            </h2>
-            <div class="px-4 py-2">
-                <p>
-                    Pasos para acceder al ip:
-                </p>
-                <div class="text-center">
-                    <ol class="list-decimal list-inside">
-                        <li>
-                            Abre cmd
-                        </li>
-                        <li>
-                            Escribe: ipconfig
-                        </li>
-                        <li>
-                            Busca Adaptador Ethernet / Adaptador Wifi
-                        </li>
-                        <li>
-                            Dirección IPv4
-                        </li>
-                        <li>
-                            -> 192.168.x.x
-                        </li>
-                        <li>
-                            Anotalo y guardalo
-                        </li>
-                    </ol>
+    <div class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/60 px-4 py-6 backdrop-blur-sm">
+        <div class="w-full max-w-md overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl">
+
+            <div class="bg-slate-900 px-6 py-5">
+                <div class="flex items-center gap-3">
+                    <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-white/10 text-xl">
+                        ❔
+                    </div>
+
+                    <div>
+                        <h2 class="text-xl font-extrabold text-white">
+                            Ayuda de conexión
+                        </h2>
+                        <p class="text-sm text-slate-300">
+                            Cómo encontrar la IP del servidor
+                        </p>
+                    </div>
                 </div>
             </div>
-            <button type="button" (click)="cerrarAyuda()" class="w-fit mx-auto px-4 py-2 m-5 rounded-lg bg-black font-semibold text-white hover:bg-gray-500 hover:-translate-y-1">
-                Cerrar
-            </button>
+
+            <div class="p-6">
+                <p class="mb-4 text-sm text-slate-600">
+                    Sigue estos pasos para consultar la dirección IPv4 de tu equipo:
+                </p>
+
+                <ol class="space-y-3">
+                    <li class="flex items-start gap-3">
+                        <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-blue-100 text-sm font-bold text-blue-700">1</span>
+                        <p class="pt-1 text-sm text-slate-700">Abre la consola de comandos (CMD).</p>
+                    </li>
+
+                    <li class="flex items-start gap-3">
+                        <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-blue-100 text-sm font-bold text-blue-700">2</span>
+                        <p class="pt-1 text-sm text-slate-700">Escribe <strong>ipconfig</strong> y presiona Enter.</p>
+                    </li>
+
+                    <li class="flex items-start gap-3">
+                        <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-blue-100 text-sm font-bold text-blue-700">3</span>
+                        <p class="pt-1 text-sm text-slate-700">Busca el adaptador Ethernet o Wi-Fi que estés utilizando.</p>
+                    </li>
+
+                    <li class="flex items-start gap-3">
+                        <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-blue-100 text-sm font-bold text-blue-700">4</span>
+                        <p class="pt-1 text-sm text-slate-700">Localiza el campo <strong>Dirección IPv4</strong>.</p>
+                    </li>
+
+                    <li class="flex items-start gap-3">
+                        <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-blue-100 text-sm font-bold text-blue-700">5</span>
+                        <p class="pt-1 text-sm text-slate-700">La dirección tendrá un formato similar a <strong>192.168.x.x</strong>.</p>
+                    </li>
+
+                    <li class="flex items-start gap-3">
+                        <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-blue-100 text-sm font-bold text-blue-700">6</span>
+                        <p class="pt-1 text-sm text-slate-700">Anota la dirección para ingresarla en la configuración.</p>
+                    </li>
+                </ol>
+
+                <button
+                    type="button"
+                    (click)="cerrarAyuda()"
+                    class="mt-6 w-full rounded-xl bg-slate-900 px-4 py-3 font-bold text-white transition hover:bg-slate-700"
+                >
+                    Entendido
+                </button>
+            </div>
         </div>
     </div>
 }
+
+<!-- Modal de mensaje -->
 @if (mensaje) {
-    <div class="flex items-center justify-center fixed inset-0 bg-black/50 z-50">
-        <div class="flex flex-col justify-center w-60 bg-white rounded-t-sm rounded-b-2xl">
-            <h2 class="rounded-sm bg-black font-bold text-2xl text-white text-center">
-                Conexion
-            </h2>
-            <p class="mt-5 font-bold text-3xl text-center">
-                {{mensaje}}
-            </p>
-            <button type="button" (click)="mensaje='' " class="w-fit mx-auto px-4 py-2 m-5 rounded-lg bg-black font-semibold text-white hover:bg-gray-500 hover:-translate-y-1">
-                Cerrar
-            </button>
+    <div class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/60 px-4 py-6 backdrop-blur-sm">
+        <div class="w-full max-w-sm overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl">
+
+            <div class="bg-slate-900 px-5 py-4">
+                <h2 class="text-center text-lg font-extrabold text-white">
+                    Resultado de conexión
+                </h2>
+            </div>
+
+            <div class="p-6">
+                <div class="mb-4 flex justify-center">
+                    <div class="flex h-14 w-14 items-center justify-center rounded-full bg-blue-50 text-3xl">
+                        🌐
+                    </div>
+                </div>
+
+                <p class="break-words text-center text-lg font-bold text-slate-800">
+                    {{mensaje}}
+                </p>
+
+                <button
+                    type="button"
+                    (click)="mensaje=''"
+                    class="mt-6 w-full rounded-xl bg-slate-900 px-4 py-3 font-bold text-white transition hover:bg-slate-700"
+                >
+                    Cerrar
+                </button>
+            </div>
         </div>
     </div>
 }
-</div>

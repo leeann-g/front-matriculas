@@ -1,0 +1,291 @@
+<div class="min-h-screen bg-slate-100 p-6">
+
+    <!-- ENCABEZADO -->
+    <div class="mb-6 flex flex-wrap items-center justify-between gap-4 print:hidden">
+
+        <div>
+            <p class="text-sm font-semibold text-blue-600">
+                Gestión administrativa / Informes
+            </p>
+
+            <h1 class="mt-1 text-2xl font-bold text-slate-900">
+                Informe de roturas
+            </h1>
+
+            <p class="mt-1 text-sm text-slate-500">
+                {{ obtenerNombreBimestre() }} de {{ anio }}
+            </p>
+        </div>
+
+        <div class="flex gap-3">
+            <a routerLink="/informe-roturas"
+                class="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50">
+                Volver
+            </a>
+
+            <button (click)="imprimirInforme()" [disabled]="cargando || error"
+                class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700 disabled:opacity-50">
+                Imprimir informe
+            </button>
+        </div>
+
+    </div>
+
+    <!-- CARGANDO -->
+    @if (cargando) {
+    <div class="rounded-xl bg-white p-10 text-center shadow-sm">
+        <p class="font-medium text-slate-600">
+            Cargando informe...
+        </p>
+    </div>
+    }
+
+    <!-- ERROR -->
+    @else if (error) {
+    <div class="rounded-xl border border-red-200 bg-red-50 p-6 text-center">
+        <p class="font-semibold text-red-700">
+            No se pudo cargar el informe.
+        </p>
+        <p class="mt-1 text-sm text-red-600">
+            Intenta nuevamente más tarde.
+        </p>
+    </div>
+    }
+
+    @else {
+
+    <!-- INDICADORES -->
+    <div class="no-print mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+
+        <div class="rounded-xl bg-white p-5 shadow-sm">
+            <p class="text-sm font-medium text-slate-500">
+                Total de roturas
+            </p>
+            <p class="mt-2 text-3xl font-bold text-slate-900">
+                {{ totalRoturas }}
+            </p>
+        </div>
+
+        <div class="rounded-xl bg-white p-5 shadow-sm">
+            <p class="text-sm font-medium text-slate-500">
+                Financiadas
+            </p>
+            <p class="mt-2 text-3xl font-bold text-blue-600">
+                {{ totalFinanciadas }}
+            </p>
+        </div>
+
+        <div class="rounded-xl bg-white p-5 shadow-sm">
+            <p class="text-sm font-medium text-slate-500">
+                Canceladas
+            </p>
+            <p class="mt-2 text-3xl font-bold text-green-600">
+                {{ totalCanceladas }}
+            </p>
+        </div>
+
+        <div class="rounded-xl bg-white p-5 shadow-sm">
+            <p class="text-sm font-medium text-slate-500">
+                Valor acumulado
+            </p>
+            <p class="mt-2 text-3xl font-bold text-slate-900">
+                {{ valorTotal | currency:'$':'symbol':'1.0-0' }}
+            </p>
+        </div>
+
+    </div>
+
+    <!-- TABLA -->
+    <div class="overflow-hidden rounded-xl bg-white shadow-sm">
+
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 p-5">
+            <div>
+                <h2 class="text-lg font-bold text-slate-900">
+                    Registro de roturas
+                </h2>
+
+                <p class="mt-1 text-sm text-slate-500">
+                    Detalle de los registros correspondientes al período seleccionado.
+                </p>
+            </div>
+
+            <span class="rounded-full bg-blue-100 px-3 py-1 text-sm font-bold text-blue-700">
+                {{ totalRoturas }} registros
+            </span>
+        </div>
+
+        <div class="overflow-x-auto">
+
+            <table class="w-full min-w-[1200px] text-sm">
+
+                <thead class="bg-slate-900 text-white">
+                    <tr>
+                        <th class="px-4 py-4 text-left">Nombre</th>
+                        <th class="px-4 py-4 text-center">Código usuario</th>
+                        <th class="px-4 py-4 text-left">Dirección</th>
+                        <th class="px-4 py-4 text-center">NUID</th>
+                        <th class="px-4 py-4 text-center">Rotura</th>
+                        <th class="px-4 py-4 text-center">Medio de pago</th>
+                        <th class="px-4 py-4 text-center">Valor</th>
+                        <th class="px-4 py-4 text-center">Fecha pago</th>
+                        <th class="px-4 py-4 text-left">Notas</th>
+                    </tr>
+                </thead>
+
+                <tbody class="divide-y divide-slate-200">
+
+                    @for (rotura of roturasInforme; track rotura.id) {
+                    <tr class="hover:bg-slate-50">
+
+                        <td class="px-4 py-4 font-semibold text-slate-900">
+                            {{ rotura.tuition?.name | titlecase }}
+                        </td>
+
+                        <td class="px-4 py-4 text-center text-slate-600">
+                            {{ rotura.tuition?.code }}
+                        </td>
+
+                        <td class="px-4 py-4 text-slate-600">
+                            {{ rotura.tuition?.address }}
+                        </td>
+
+                        <td class="px-4 py-4 text-center text-slate-600">
+                            {{ rotura.tuition?.nuid }}
+                        </td>
+
+                        <td class="px-4 py-4 text-center">
+                            <span [class.bg-blue-200]="rotura.rip === 'financiada'"
+                                [class.text-blue-700]="rotura.rip === 'financiada'"
+                                [class.bg-green-200]="rotura.rip === 'cancelada'"
+                                [class.text-green-800]="rotura.rip === 'cancelada'"
+                                class="inline-flex rounded-full px-3 py-1 text-xs font-bold">
+                                {{ rotura.rip }}
+                            </span>
+                        </td>
+
+                        <td class="px-4 py-4 text-center text-slate-600">
+                            {{ rotura.payment }}
+                        </td>
+
+                        <td class="px-4 py-4 text-center font-semibold text-slate-800">
+                            {{ rotura.amount | currency:'$':'symbol':'1.0-0' }}
+                        </td>
+
+                        <td class="px-4 py-4 text-center text-slate-600">
+                            {{ rotura.payment_date }}
+                        </td>
+
+                        <td class="px-4 py-4 text-slate-600">
+                            {{ rotura.observation || 'Sin notas' }}
+                        </td>
+
+                    </tr>
+                    }
+
+                    @if (roturasInforme.length === 0) {
+                    <tr>
+                        <td colspan="10" class="px-4 py-10 text-center text-slate-500">
+                            No hay roturas registradas en este período.
+                        </td>
+                    </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <!-- PIE -->
+        <div class="border-t border-slate-200 bg-slate-50 px-5 py-4 text-right">
+            <p class="text-sm font-semibold text-slate-700">
+                Total de registros: {{ totalRoturas }}
+            </p>
+        </div>
+
+    </div>
+    }
+    <!-- CONFIGURACIÓN DE FIRMAS -->
+    <div class="no-print mt-8 rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+
+        <h2 class="mb-4 text-lg font-bold text-slate-800">
+            Responsables del informe
+        </h2>
+
+        <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
+
+            <!-- APRENDIZ -->
+            <div>
+                <label class="mb-2 block text-sm font-semibold text-slate-700">
+                    Nombre del aprendiz
+                </label>
+
+                <input type="text" [value]="nombreAprendiz" (input)="guardarNombreAprendiz($event)"
+                    placeholder="Escribe el nombre del aprendiz"
+                    class="w-full rounded-lg border border-slate-300 px-4 py-3 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100">
+            </div>
+
+            <!-- INGENIERO -->
+            <div>
+                <label class="mb-2 block text-sm font-semibold text-slate-700">
+                    Nombre del ingeniero
+                </label>
+
+                <input type="text" [value]="nombreIngeniero" (input)="guardarNombreIngeniero($event)"
+                    placeholder="Escribe el nombre del ingeniero"
+                    class="w-full rounded-lg border border-slate-300 px-4 py-3 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100">
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+
+<!-- FIRMAS PARA IMPRESIÓN -->
+<div class="print-only flex flex-row justify-around gap-16 px-10">
+
+    <!-- FIRMA APRENDIZ -->
+    <div class="w-1/2 pt-16 text-center">
+        <div class="border-t border-slate-800 pt-3">
+            <p class="text-sm font-bold uppercase text-slate-800">
+                {{ nombreAprendiz || 'Nombre no registrado' }}
+            </p>
+
+            <p class="mt-1 text-xs text-slate-600">
+                APRENDIZ
+            </p>
+        </div>
+    </div>
+
+    <!-- FIRMA INGENIERO -->
+    <div class="w-1/2 pt-16 text-center">
+        <div class="border-t border-slate-800 pt-3">
+            <p class="text-sm font-bold uppercase text-slate-800">
+                {{ nombreIngeniero || 'Nombre no registrado' }}
+            </p>
+
+            <p class="mt-1 text-xs text-slate-600">
+                INGENIERO RESPONSABLE
+            </p>
+        </div>
+    </div>
+
+</div>
+<!-- MARCA DE AGUA -->
+<div class="print-only border-t border-slate-200 pt-4 text-center">
+
+    <p class="text-xs font-medium tracking-wide text-slate-100">
+        INFORME GENERADO
+    </p>
+
+    <p class="mt-1 text-sm font-bold text-slate-100">
+        Desarrollador Leandro Gómez
+    </p>
+
+    <p class="mt-1 text-xs text-slate-100">
+        Sistema de Gestión de Matrículas y Roturas
+    </p>
+
+</div>

@@ -1,4 +1,4 @@
-import { Component, inject} from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { ApiInicio } from '../../services/api-inicio';
 import {RouterLink } from '@angular/router';
 
@@ -6,6 +6,7 @@ import {RouterLink } from '@angular/router';
   selector: 'app-inicio',
   imports: [RouterLink],
   templateUrl: './inicio.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './inicio.css',
 })
 export class Inicio {

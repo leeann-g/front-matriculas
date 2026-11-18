@@ -34,3 +34,8 @@
         background-color: gray;
     }
 }
+@media print{
+    .no-print{
+        display: none;
+    }
+}

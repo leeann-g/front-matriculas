@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Config } from '../../services/config';
 import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
   selector: 'app-configuracion',
   imports: [ReactiveFormsModule],
   templateUrl: './configuracion.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './configuracion.css',
 })
 export class Configuracion {
@@ -15,6 +16,7 @@ export class Configuracion {
   urlApi = '';
   ayuda = false;
   mensaje = '';
+  loading = false;
 
   ngOnInit() {
     this.urlApi = this.config.getUrlApi();
@@ -49,12 +51,15 @@ export class Configuracion {
   }
 
   probarConexion(){
+    this.loading = true;
     this.config.probarConexion(this.construirApiUrl()).subscribe({
       next:(respuesta)=>{
         this.mensaje = respuesta.mensaje;
+        this.loading = false;
       },
       error:(error)=>{
         this.mensaje = 'No hay conexion';
+        this.loading = false;
       }
     });
   }

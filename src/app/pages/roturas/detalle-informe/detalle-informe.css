@@ -1,0 +1,56 @@
+/* Ocultar marca de agua en pantalla */
+.print-only {
+    display: none;
+}
+
+@media print {
+    @page {
+        size: landscape;
+        margin: 12mm;
+    }
+
+    body {
+        background: white !important;
+    }
+
+    .min-h-screen {
+        min-height: auto !important;
+        padding: 0 !important;
+    }
+
+    table {
+        width: 100% !important;
+        min-width: 0 !important;
+        font-size: 9px !important;
+    }
+
+    tr {
+        break-inside: avoid;
+    }
+
+    th,
+    td {
+        padding: 6px !important;
+    }
+
+    .shadow-sm {
+        box-shadow: none !important;
+    }
+
+    .no-print {
+        display: none !important;
+    }
+
+    /* Mostrar marca de agua al imprimir */
+    .print-only {
+        display: block !important;
+    }
+
+    /* Mantener las firmas una al lado de la otra */
+    .print-only.flex {
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: space-around !important;
+        gap: 40px !important;
+    }
+}

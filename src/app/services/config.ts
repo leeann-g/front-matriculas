@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class Config {
-  private urlApi = 'http://127.0.0.1:8000/api';
+  private urlApi = 'http://api-matriculas.test/api';
   private http = inject(HttpClient);
 
   getUrlApi(){
